@@ -5,6 +5,38 @@
     当设置成trace时，你会看到log4j2内部各种详细输出-->
 <!--monitorInterval：Log4j能够自动检测修改配置 文件和重新配置本身，设置间隔秒数-->
 <configuration status="warn" monitorInterval="30">
+    <!--定义引用名-->
+    <Properties>
+        <property name="user_home">${sys:user.home}/</property>
+        <property name="log_home">../logs/ccx-aims-open/</property>
+        <property name="log_pattern">%d{yyyy-MM-dd HH:mm:ss SSS} [%-5level] [%c{1}] [%L] [%M] - %msg%xEx%n</property>
+        <property name="log_pattern2">%d{yyyy-MM-dd HH:mm:ss SSS} [%-5level] - %msg%xEx%n</property>
+
+        <property name="fatal_name">${log_home}/fatal.log</property> <!-- FATAL级别 最严重 -->
+        <property name="error_name">${log_home}/error.log</property> <!-- ERROR级别 -->
+        <property name="warn_name">${log_home}/warn.log</property>
+        <property name="info_name">${log_home}/info.log</property>
+        <property name="debug_name">${log_home}/debug.log</property>
+        <property name="all_name">${log_home}/all.log</property>
+
+        <property name="queue_name">${log_home}/queue/queueData.log</property>
+        <property name="feedBack_name">${log_home}/feedback/feedback.log</property>
+
+
+        <property name="queque_file_name">${log_home}/queque_file-%d{yyyy-MM-dd}-%i.log.gz"</property>
+        <property name="feedBack_file_name">${log_home}/feedBack_file-%d{yyyy-MM-dd}-%i.log.gz"</property>
+
+        <property name="fatal_rolling_file_name">logs/%d{yyyy-MM-dd}/fatal-%d{yyyy-MM-dd}-%i.log.gz</property>
+        <property name="error_rolling_file_name">logs/%d{yyyy-MM-dd}/error-%d{yyyy-MM-dd}-%i.log.gz</property>
+        <property name="warn_rolling_file_name">logs/%d{yyyy-MM-dd}/warn-%d{yyyy-MM-dd}-%i.log.gz</property>
+        <property name="info_rolling_file_name">logs/%d{yyyy-MM-dd}/info-%d{yyyy-MM-dd}-%i.log.gz</property>
+        <property name="debug_rolling_file_name">logs/%d{yyyy-MM-dd}/debug-%d{yyyy-MM-dd}-%i.log.gz</property>
+        <property name="all_rolling_file_name">logs/%d{yyyy-MM-dd}/all-%d{yyyy-MM-dd}-%i.log.gz</property>
+
+        <property name="every_file_size">100M</property><!-- 日志切割的最小单位 -->
+        <property name="output_log_level">info</property><!-- 日志输出级别 -->
+
+    </Properties>
     <!--先定义所有的appender-->
     <appenders>
         <!--这个输出控制台的配置-->
@@ -32,7 +64,7 @@
             </Policies>
         </RollingFile>
 
-        <RollingFile name="RollingFileWarn" fileName="${sys:user.home}/logs/hpaasvc/warn.log"
+        <RollingFile name="RollingFileWarn" fileName="/logs/hpaasvc/warn.log"
                      filePattern="/logs/hpaasvc/$${date:yyyy-MM}/warn-%d{yyyy-MM-dd}-%i.log">
             <Filters>
                 <ThresholdFilter level="WARN" onMatch="ACCEPT" onMismatch="DENY"/>
